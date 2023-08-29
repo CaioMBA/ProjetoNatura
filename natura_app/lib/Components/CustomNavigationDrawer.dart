@@ -26,21 +26,26 @@ class CustomNavigationDrawer extends StatelessWidget {
             CircleAvatar(
               radius: 70,
               backgroundColor: Colors.amber,
-              backgroundImage:
-                  NetworkImage(GlobalStatics.UserPhoto!),
+              backgroundImage: NetworkImage(GlobalStatics.UserPhoto!),
             ),
             SizedBox(height: 10),
-            Text(GlobalStatics.UserName!,
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(GlobalStatics.UserName!,
+                  style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold)),
+            ),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                GlobalStatics.UserEmail!,
                 style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold)),
-            Text(
-              GlobalStatics.UserEmail!,
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.blue),
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.blue),
+              ),
             ),
           ],
         ));
