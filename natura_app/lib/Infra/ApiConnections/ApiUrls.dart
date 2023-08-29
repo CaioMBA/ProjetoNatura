@@ -5,4 +5,5 @@ class ApiUrls {
   static String? ValidateAccount = ':7000/ValidarUsuario';
   static String? ChangePassword = ':7000/TrocarSenha';
   static String? SendNotification = ':7001/EnviarNotificacao';
+  static String? GetUserInfo = ':7002/InformacoesUsuario';
 }

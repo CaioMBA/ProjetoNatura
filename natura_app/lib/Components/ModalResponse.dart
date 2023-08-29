@@ -36,13 +36,14 @@ class ModalResponse extends StatelessWidget {
       } catch (_) {}
     });
     return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         backgroundColor: ColorChoice,
         title: Center(
             child: StrokeText(
                 text: MSG ?? 'Sem resposta da API',
                 textStyle: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-                strokeColor: Colors.black,
-                strokeWidth: 5)));
+                    color: Colors.black, fontWeight: FontWeight.bold),
+                strokeColor: Colors.white,
+                strokeWidth: 3)));
   }
 }

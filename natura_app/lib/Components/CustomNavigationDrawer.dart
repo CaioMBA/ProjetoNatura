@@ -1,32 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:natura_app/Pages/Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Domain/StaticSchematics.dart';
 
-class CustomNavigationDrawer extends StatefulWidget {
-  CustomNavigationDrawer({super.key});
-
-  @override
-  State<CustomNavigationDrawer> createState() => _CustomNavigationDrawerState();
-}
-
-class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
-  late SharedPreferences loginData;
-  String? Username = 'User';
-  String? Password = '';
-
-  @override
-  void initState() {
-    super.initState();
-    GetUserPassword();
-  }
-
-  void GetUserPassword() async {
-    loginData = await SharedPreferences.getInstance();
-    setState(() {
-      Username = loginData.getString('UserName');
-      Password = loginData.getString('Password');
-    });
-  }
+class CustomNavigationDrawer extends StatelessWidget {
+  const CustomNavigationDrawer({super.key});
 
   Widget build(BuildContext context) {
     return Drawer(
@@ -49,16 +27,16 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
               radius: 70,
               backgroundColor: Colors.amber,
               backgroundImage:
-                  NetworkImage('https://picsum.photos/250?image=9'),
+                  NetworkImage(GlobalStatics.UserPhoto!),
             ),
             SizedBox(height: 10),
-            Text(Username!,
+            Text(GlobalStatics.UserName!,
                 style: TextStyle(
                     fontSize: 28,
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
             Text(
-              'e-mail',
+              GlobalStatics.UserEmail!,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
@@ -93,7 +71,7 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.favorite),
-            title: const Text('Favorites'),
+            title: const Text('Favoritos'),
             onTap: () {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));

@@ -8,7 +8,9 @@ import 'package:natura_app/Services/SignUserService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Components/CommonModalShow.dart';
 import '../Domain/DefaultApiResponseModel.dart';
+import '../Domain/StaticSchematics.dart';
 import '../Services/ChangePasswordService.dart';
+import '../Services/GetUserExtraInfoService.dart';
 import 'RegisterAccount.dart';
 
 class LoginPage extends StatefulWidget {
@@ -44,8 +46,10 @@ class _LoginPageState extends State<LoginPage> {
     if (!newUser!) {
       DefaultApiResponseModel? ResponseService = await SignIn(UserNameController.text, PasswordController.text);
       if (ResponseService?.STATUS == '1'){
+        GlobalStatics.UserName = UserNameController.text;
         UserNameController.clear();
         PasswordController.clear();
+        await GetExtraInfo(GlobalStatics.UserName);
         Navigator.pushReplacement(
             context, new MaterialPageRoute(builder: (context) => HomePage()));
       }
@@ -69,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
           loginData.setString('UserName', UserNameController.text);
           loginData.setString('Password', PasswordController.text);
         }
+        await GetExtraInfo(UserNameController.text);
 
 
         Navigator.pushReplacement(
