@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:natura_app/Domain/StaticSchematics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Pages/Login.dart';
@@ -19,14 +20,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   void initState() {
     super.initState();
-    GetUserPassword();
+    GetUser();
   }
 
-  void GetUserPassword() async {
+  void GetUser() async {
     loginData = await SharedPreferences.getInstance();
     setState(() {
       Username = loginData.getString('UserName');
-      Password = loginData.getString('Password');
     });
   }
 
@@ -35,6 +35,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
       loginData.setBool('Login', true);
       loginData.setString('UserName', '');
       loginData.setString('Password', '');
+      GlobalStatics.UserLogin = '';
+      GlobalStatics.UserEmail = '';
+      GlobalStatics.UserPhoto = '';
+      GlobalStatics.UserPhone = '';
+      GlobalStatics.UserUnique = '';
+      GlobalStatics.UserBirthday = '';
+      GlobalStatics.UserName = '';
+      GlobalStatics.UserID = 0;
+
       Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => LoginPage()));
     }

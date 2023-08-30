@@ -16,7 +16,9 @@ GetExtraInfo(String? Credencial) async {
       headers: Headers,
       url: '${ApiUrls.StartUrl}${ApiUrls.GetUserInfo}',
       typeRequest: 'GET'));
-
+  if (response.statusCode == 500){
+    return;
+  }
   var jsonReponse = json.decode(response.body);
 
   UserExtraInfoModel responseModel = UserExtraInfoModel(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:natura_app/Components/CommonTextField.dart';
 import 'package:natura_app/Components/ModalResponse.dart';
 import 'package:natura_app/Components/SignInButton.dart';
@@ -8,10 +9,13 @@ import 'package:natura_app/Services/SignUserService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Components/CommonModalShow.dart';
 import '../Domain/DefaultApiResponseModel.dart';
+import '../Domain/OutsideAppSignInResponse.dart';
 import '../Domain/StaticSchematics.dart';
 import '../Services/ChangePasswordService.dart';
 import '../Services/GetUserExtraInfoService.dart';
+import '../Services/OutsideAppSignInService.dart';
 import 'RegisterAccount.dart';
+import 'RegisterAccountWithOutsideApp.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -153,6 +157,22 @@ class _LoginPageState extends State<LoginPage> {
           });
     }
 
+    void GoogleSignInMethod() async{
+      OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
+     if (CheckSignIn != null && CheckSignIn.Valid!){
+       Navigator.pushReplacement(
+           context, MaterialPageRoute(builder: (context) => HomePage()));
+     }
+     else{
+       Navigator.pushReplacement(
+           context, MaterialPageRoute(builder: (context) => RegisterAccountWithOutsideApp(
+         UserLogin: CheckSignIn?.Account?.email,
+         Email: CheckSignIn?.Account?.email,
+         Name: CheckSignIn?.Account?.displayName,
+       )));
+     }
+    }
+
     return Scaffold(
         //resizeToAvoidBottomInset: false,
         body: Container(
@@ -263,10 +283,12 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SquareTile(
+                    onTap: GoogleSignInMethod,
                     imagePath: 'lib/Images/google-logo.png',
                   ),
                   SizedBox(width: 15),
                   SquareTile(
+                    onTap: (){},
                     imagePath: 'lib/Images/apple-logo.png',
                   )
                 ],

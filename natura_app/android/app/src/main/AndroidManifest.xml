@@ -9,6 +9,7 @@
         </intent>
     </queries>
    <application
+       android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:label="Natura App"
         android:name="${applicationName}"
