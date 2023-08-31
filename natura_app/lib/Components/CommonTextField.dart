@@ -70,7 +70,7 @@ class CommonInputTextField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.orange),
             ),
             fillColor: Colors.grey.shade200,

@@ -32,12 +32,14 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
   final EmailController = TextEditingController();
   final PhoneController = TextEditingController();
   final BirthdayController = TextEditingController();
+  late final String? PhotoLink;
 
   @override
   Widget build(BuildContext context) {
     FullNameController.text = widget.Name!;
     UserNameController.text = widget.UserLogin!;
     EmailController.text = widget.UserLogin!;
+    PhotoLink = widget.Photo;
 
     void SignUpButtonFunction(String) async {
       showDialog(
@@ -89,7 +91,8 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
           EmailController.text,
           PhoneController.text,
           BirthdayController.text,
-          CpfCnpjController.text);
+          CpfCnpjController.text,
+          PhotoLink);
       if (ResponseService?.STATUS != null && ResponseService?.STATUS == "1") {
         if (PhoneController.text != '') {
           final Uri url = Uri.parse('https://t.me/NotifyApi_bot');
@@ -225,7 +228,10 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
               const SizedBox(height: 35),
               const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Divider(color: Colors.grey,thickness: 0.7,)),
+                  child: Divider(
+                    color: Colors.grey,
+                    thickness: 0.7,
+                  )),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('Já tem cadastro?'),
                 SizedBox(width: 5),

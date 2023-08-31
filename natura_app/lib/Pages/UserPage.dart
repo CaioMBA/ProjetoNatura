@@ -4,12 +4,18 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:natura_app/Components/CustomNavigationDrawer.dart';
 import '../Components/CustomAppBar.dart';
+import '../Components/ImagePickerModal.dart';
 import '../Domain/StaticSchematics.dart';
 import '../Services/PickImageService.dart';
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   UserPage({super.key});
 
+  @override
+  State<UserPage> createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     final backgroundImage = GlobalStatics.UserPhoto!.startsWith('http')
@@ -18,41 +24,16 @@ class UserPage extends StatelessWidget {
             Uint8List.fromList(base64.decode(GlobalStatics.UserPhoto!)));
 
 
-    void _showImagePickerDialog(BuildContext context) {
+    void ImagePickerShow(BuildContext context) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Selecionar Imagem'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  leading: Icon(Icons.camera),
-                  title: Text('Câmera'),
-                  onTap: () {
-                    var Base64Bytes = ChooseImageFile('CAMERA');
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.photo),
-                  title: Text('Galeria'),
-                  onTap: () {
-                    var Base64Bytes = ChooseImageFile('GALLERY');
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                    leading: Icon(Icons.wifi), title: Text('Digite o Link'))
-              ],
-            ),
-          );
+          return ImagePickerModal();
         },
       );
     }
-    void WrapDialog(){
-      _showImagePickerDialog(context);
+    void wrapImagePickerShow(){
+      ImagePickerShow(context);
     }
 
     return Scaffold(
@@ -77,7 +58,7 @@ class UserPage extends StatelessWidget {
                           radius: 72,
                           backgroundColor: Colors.black,
                           child: InkWell(
-                            onTap: WrapDialog,
+                            onTap: wrapImagePickerShow,
                             child: CircleAvatar(
                               radius: 70,
                               backgroundColor: Colors.amber,

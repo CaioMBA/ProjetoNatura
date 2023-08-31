@@ -33,6 +33,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     void SignOut() {
       loginData.setBool('Login', true);
+      loginData.setBool('OutsideAppSigned', false);
       loginData.setString('UserName', '');
       loginData.setString('Password', '');
       GlobalStatics.UserLogin = '';

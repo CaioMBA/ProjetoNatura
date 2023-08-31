@@ -36,7 +36,8 @@ Future<DefaultApiResponseModel?> SignUp(
     String Email,
     String? Phone,
     String BirthDay,
-    String CPF_CNPJ
+    String CPF_CNPJ,
+    String? PhotoLink
     ) async {
   List<CustomHeaderModel> Headers = [];
 
@@ -48,7 +49,8 @@ Future<DefaultApiResponseModel?> SignUp(
     "p_BIRTHDAY": '${DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").format(DateTime.parse(BirthDay))}Z',
     "p_EMAIL": Email,
     "p_PHONE": Phone,
-    "p_TYPE": "USER"
+    "p_TYPE": "USER",
+    "P_PHOTO": PhotoLink
   };
 
   String? Body = jsonEncode(JsonData);

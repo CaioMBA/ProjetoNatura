@@ -29,9 +29,11 @@ class _LoginPageState extends State<LoginPage> {
   final PasswordController = TextEditingController();
   final ForgotPasswordController = TextEditingController();
   bool RememberMe = false;
+  bool SignedWithGoogle = false;
 
   late SharedPreferences loginData;
   bool? newUser;
+  bool? OutsideAppSigned;
 
   @override
   void initState() {
@@ -44,10 +46,20 @@ class _LoginPageState extends State<LoginPage> {
   void CheckIfAlreadyLoggedIn() async {
     loginData = await SharedPreferences.getInstance();
     newUser = (loginData.getBool('Login') ?? true);
+    OutsideAppSigned = (loginData.getBool('OutsideAppSigned') ?? false);
     UserNameController.text = loginData.getString('UserName') ?? "";
     PasswordController.text = loginData.getString('Password') ?? "";
 
     if (!newUser!) {
+      if (OutsideAppSigned!){
+        GlobalStatics.UserName = UserNameController.text;
+        UserNameController.clear();
+        PasswordController.clear();
+        await GetExtraInfo(GlobalStatics.UserName);
+        Navigator.pushReplacement(
+            context, new MaterialPageRoute(builder: (context) => HomePage()));
+        return;
+      }
       DefaultApiResponseModel? ResponseService = await SignIn(UserNameController.text, PasswordController.text);
       if (ResponseService?.STATUS == '1'){
         GlobalStatics.UserName = UserNameController.text;
@@ -56,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         await GetExtraInfo(GlobalStatics.UserName);
         Navigator.pushReplacement(
             context, new MaterialPageRoute(builder: (context) => HomePage()));
+        return;
       }
     }
   }
@@ -160,6 +173,14 @@ class _LoginPageState extends State<LoginPage> {
     void GoogleSignInMethod() async{
       OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
      if (CheckSignIn != null && CheckSignIn.Valid!){
+       SignedWithGoogle = true;
+       if (RememberMe) {
+         loginData.setBool('Login', false);
+         loginData.setBool('OutsideAppSigned', true);
+
+         loginData.setString('UserName', CheckSignIn!.Account!.email);
+         loginData.setString('Password', '');
+       }
        Navigator.pushReplacement(
            context, MaterialPageRoute(builder: (context) => HomePage()));
      }

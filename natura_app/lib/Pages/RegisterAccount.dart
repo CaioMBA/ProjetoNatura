@@ -8,7 +8,10 @@ import '../Components/SignInButton.dart';
 import '../Components/SquareTile.dart';
 import '../Domain/DefaultApiResponseModel.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../Domain/OutsideAppSignInResponse.dart';
+import '../Services/OutsideAppSignInService.dart';
 import 'Home.dart';
+import 'RegisterAccountWithOutsideApp.dart';
 
 class RegisterAccount extends StatefulWidget {
   const RegisterAccount({super.key});
@@ -29,6 +32,23 @@ class _RegisterAccountState extends State<RegisterAccount> {
 
   @override
   Widget build(BuildContext context) {
+    void GoogleSignInMethod() async {
+      OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
+      if (CheckSignIn != null && CheckSignIn.Valid!) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RegisterAccountWithOutsideApp(
+                      UserLogin: CheckSignIn?.Account?.email,
+                      Email: CheckSignIn?.Account?.email,
+                      Name: CheckSignIn?.Account?.displayName,
+                    )));
+      }
+    }
+
     void SignUpButtonFunction(String) async {
       showDialog(
           context: context,
@@ -79,7 +99,8 @@ class _RegisterAccountState extends State<RegisterAccount> {
           EmailController.text,
           PhoneController.text,
           BirthdayController.text,
-          CpfCnpjController.text);
+          CpfCnpjController.text,
+          '');
       if (ResponseService?.STATUS != null && ResponseService?.STATUS == "1") {
         if (PhoneController.text != '') {
           final Uri url = Uri.parse('https://t.me/NotifyApi_bot');
@@ -243,6 +264,7 @@ class _RegisterAccountState extends State<RegisterAccount> {
                 children: [
                   SquareTile(
                     imagePath: 'lib/Images/google-logo.png',
+                    onTap: GoogleSignInMethod,
                   ),
                   SizedBox(width: 15),
                   SquareTile(
