@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:natura_app/Pages/Login.dart';
-import 'package:natura_app/Services/SignUserService.dart';
 import '../Components/CommonDatePickerField.dart';
 import '../Components/CommonTextField.dart';
 import '../Components/ModalResponse.dart';
@@ -8,6 +7,7 @@ import '../Components/SignInButton.dart';
 import '../Components/SquareTile.dart';
 import '../Domain/DefaultApiResponseModel.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../Services/UserServices.dart';
 import 'Home.dart';
 
 class RegisterAccountWithOutsideApp extends StatefulWidget {
@@ -32,16 +32,15 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
   final EmailController = TextEditingController();
   final PhoneController = TextEditingController();
   final BirthdayController = TextEditingController();
-  late final String? PhotoLink;
 
   @override
   Widget build(BuildContext context) {
     FullNameController.text = widget.Name!;
     UserNameController.text = widget.UserLogin!;
     EmailController.text = widget.UserLogin!;
-    PhotoLink = widget.Photo;
 
-    void SignUpButtonFunction(String) async {
+    void SignUpButtonFunction(String s) async {
+      String? Phone;
       showDialog(
           context: context,
           builder: (context) {
@@ -84,21 +83,24 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
             });
       }
 
+      if (PhoneController.text != '') {
+        Phone = PhoneController.text;
+        Phone = Phone.replaceAll(' ', '')
+            .replaceAll('-', '')
+            .replaceAll('(', '')
+            .replaceAll(')', '');
+      }
+
       DefaultApiResponseModel? ResponseService = await SignUp(
           FullNameController.text,
           UserNameController.text,
           PasswordController.text,
           EmailController.text,
-          PhoneController.text,
+          Phone,
           BirthdayController.text,
           CpfCnpjController.text,
-          PhotoLink);
+          widget.Photo.toString());
       if (ResponseService?.STATUS != null && ResponseService?.STATUS == "1") {
-        if (PhoneController.text != '') {
-          final Uri url = Uri.parse('https://t.me/NotifyApi_bot');
-          if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {}
-        }
-
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
@@ -135,12 +137,12 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 15),
-              const SquareTile(
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              SquareTile(
                 imagePath: 'lib/Images/natura-logo.png',
-                Height: 120,
+                Height: MediaQuery.of(context).size.height * 0.18,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Text(
                 'Cadastre-se em nosso App!',
                 style: TextStyle(
@@ -148,39 +150,39 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CommonInputTextField(
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       controller: FullNameController,
                       hintText: 'Nome Completo *',
                       obscureText: false),
                   CommonInputTextField(
                       controller: UserNameController,
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       hintText: 'Usuário *',
                       obscureText: false)
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CommonInputTextField(
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       controller: PasswordController,
                       hintText: 'Senha *',
                       obscureText: true),
                   CommonInputTextField(
                       controller: ConfirmPasswordController,
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       hintText: 'Confirmar Senha *',
                       obscureText: true)
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -192,7 +194,7 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -204,17 +206,17 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
                   )
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CommonDatePickerField(
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       controller: BirthdayController,
                       hintText: 'Data Nascimento *'),
                   CommonInputTextField(
                     controller: CpfCnpjController,
-                    width: 175,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     hintText: 'CPF | CNPJ *',
                     obscureText: false,
                     InputType: 'NUMBER',
@@ -223,18 +225,19 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
                   )
                 ],
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
               SignInButton(text: 'Cadastrar', onTap: signUpWrapper),
-              const SizedBox(height: 35),
-              const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.05),
                   child: Divider(
                     color: Colors.grey,
-                    thickness: 0.7,
+                    thickness: MediaQuery.of(context).size.height * 0.002,
                   )),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('Já tem cadastro?'),
-                SizedBox(width: 5),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(context,

@@ -1,19 +1,17 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:natura_app/Components/CommonTextField.dart';
 import 'package:natura_app/Components/ModalResponse.dart';
 import 'package:natura_app/Components/SignInButton.dart';
 import 'package:natura_app/Components/SquareTile.dart';
 import 'package:natura_app/Pages/Home.dart';
-import 'package:natura_app/Services/SignUserService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Components/CommonModalShow.dart';
 import '../Domain/DefaultApiResponseModel.dart';
 import '../Domain/OutsideAppSignInResponse.dart';
 import '../Domain/StaticSchematics.dart';
-import '../Services/ChangePasswordService.dart';
-import '../Services/GetUserExtraInfoService.dart';
 import '../Services/OutsideAppSignInService.dart';
+import '../Services/UserServices.dart';
 import 'RegisterAccount.dart';
 import 'RegisterAccountWithOutsideApp.dart';
 
@@ -51,17 +49,28 @@ class _LoginPageState extends State<LoginPage> {
     PasswordController.text = loginData.getString('Password') ?? "";
 
     if (!newUser!) {
-      if (OutsideAppSigned!){
-        GlobalStatics.UserName = UserNameController.text;
-        UserNameController.clear();
-        PasswordController.clear();
-        await GetExtraInfo(GlobalStatics.UserName);
-        Navigator.pushReplacement(
-            context, new MaterialPageRoute(builder: (context) => HomePage()));
-        return;
+      if (OutsideAppSigned!) {
+        //GlobalStatics.UserName = UserNameController.text;
+        //UserNameController.clear();
+        //PasswordController.clear();
+        await GetExtraInfo(UserNameController.text);
+        if (GlobalStatics.UserName == '') {
+          UserNameController.clear();
+          PasswordController.clear();
+          loginData.setBool('OutsideAppSigned', false);
+          loginData.setBool('Login', true);
+          loginData.setString('UserName', '');
+          loginData.setString('Password', '');
+          return;
+        } else {
+          Navigator.pushReplacement(
+              context, new MaterialPageRoute(builder: (context) => HomePage()));
+          return;
+        }
       }
-      DefaultApiResponseModel? ResponseService = await SignIn(UserNameController.text, PasswordController.text);
-      if (ResponseService?.STATUS == '1'){
+      DefaultApiResponseModel? ResponseService =
+          await SignIn(UserNameController.text, PasswordController.text);
+      if (ResponseService?.STATUS == '1') {
         GlobalStatics.UserName = UserNameController.text;
         UserNameController.clear();
         PasswordController.clear();
@@ -72,14 +81,37 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-
+  @override
   Widget build(BuildContext context) {
-    void SignInButtonFunction(String) async {
+    void SignInButtonFunction(String s) async {
       showDialog(
           context: context,
           builder: (context) {
             return const Center(child: CircularProgressIndicator());
           });
+
+      if (UserNameController.text == "" || PasswordController.text == "") {
+        String? MSG = "";
+        MSG += UserNameController.text == ''
+            ? 'Campo CREDENCIAL não pode ser vazio'
+            : '';
+        MSG += MSG == '' ? '' : '\n';
+        MSG += PasswordController.text == ''
+            ? 'Campo SENHA não pode ser vazio'
+            : '';
+        Navigator.pop(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ModalResponse(
+                MSG: MSG,
+                STATUS: '0',
+                Type: 'WARNING',
+                Seconds: 3,
+              );
+            });
+        return;
+      }
 
       DefaultApiResponseModel? ResponseService =
           await SignIn(UserNameController.text, PasswordController.text);
@@ -91,7 +123,6 @@ class _LoginPageState extends State<LoginPage> {
           loginData.setString('Password', PasswordController.text);
         }
         await GetExtraInfo(UserNameController.text);
-
 
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -123,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context) {
             return const Center(child: CircularProgressIndicator());
           });
-      if (ForgotPasswordController.text == ''){
+      if (ForgotPasswordController.text == '') {
         Navigator.pop(context);
         return showDialog(
             context: context,
@@ -170,28 +201,41 @@ class _LoginPageState extends State<LoginPage> {
           });
     }
 
-    void GoogleSignInMethod() async{
-      OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
-     if (CheckSignIn != null && CheckSignIn.Valid!){
-       SignedWithGoogle = true;
-       if (RememberMe) {
-         loginData.setBool('Login', false);
-         loginData.setBool('OutsideAppSigned', true);
+    void GoogleSignInMethod() async {
+      try {
+        OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
+        CheckSignIn?.Valid = CheckSignIn.Valid ?? false;
+        if (CheckSignIn == null) {
+          return;
+        }
+        if (CheckSignIn.Valid!) {
+          SignedWithGoogle = true;
+          if (RememberMe) {
+            loginData.setBool('Login', false);
+            loginData.setBool('OutsideAppSigned', true);
 
-         loginData.setString('UserName', CheckSignIn!.Account!.email);
-         loginData.setString('Password', '');
-       }
-       Navigator.pushReplacement(
-           context, MaterialPageRoute(builder: (context) => HomePage()));
-     }
-     else{
-       Navigator.pushReplacement(
-           context, MaterialPageRoute(builder: (context) => RegisterAccountWithOutsideApp(
-         UserLogin: CheckSignIn?.Account?.email,
-         Email: CheckSignIn?.Account?.email,
-         Name: CheckSignIn?.Account?.displayName,
-       )));
-     }
+            loginData.setString('UserName', CheckSignIn!.Account!.email);
+            loginData.setString('Password', '');
+          }
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RegisterAccountWithOutsideApp(
+                      UserLogin: CheckSignIn?.Account?.email,
+                      Email: CheckSignIn?.Account?.email,
+                      Name: CheckSignIn?.Account?.displayName,
+                      Photo: CheckSignIn?.Account?.photoUrl)));
+        }
+      } catch (_) {
+        try {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        } catch (_) {}
+      }
     }
 
     return Scaffold(
@@ -207,16 +251,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 35),
-              const SquareTile(
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              SquareTile(
                 imagePath: 'lib/Images/natura-logo.png',
-                Height: 120,
+                Height: MediaQuery.of(context).size.height * 0.18,
               ),
-              /*const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),*/
-              const SizedBox(height: 40),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Text(
                 'Bem-vindo(a) ao App Natura!',
                 style: TextStyle(
@@ -224,68 +264,77 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025),
               CommonInputTextField(
                   controller: UserNameController,
                   hintText: 'USUÁRIO | CPF | E-MAIL | TELEFONE',
                   obscureText: false),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               CommonInputTextField(
                   controller: PasswordController,
                   hintText: 'SENHA',
-                  obscureText: true,
+                  IsPassword: true,
                   Type: 'DONE',
                   onSubmitted: SignInButtonFunction),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Checkbox(
-                        value: RememberMe,
-                        onChanged: (newValue) {
-                          setState(() {
-                            RememberMe = newValue!;
-                          });
-                        }),
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            RememberMe = !RememberMe;
-                          });
-                        },
-                        child: Text(
-                          'Lembrar do Login',
-                          style: TextStyle(color: Colors.grey[700]),
-                        )),
-                    SizedBox(
-                      width: 50,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.07),
+                  child: Row(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Checkbox(
+                            value: RememberMe,
+                            onChanged: (newValue) {
+                              setState(() {
+                                RememberMe = newValue!;
+                              });
+                            }),
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * 0.04),
+                          child: TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  RememberMe = !RememberMe;
+                                });
+                              },
+                              child: Text(
+                                'Lembrar do Login',
+                                style: TextStyle(color: Colors.grey[700]),
+                              )),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      onPressed: ForgotPasswordModal,
-                      child: Text(
-                        'esqueceu a senha?',
-                        style: TextStyle(color: Colors.grey[600]),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.04),
+                      child: TextButton(
+                        onPressed: ForgotPasswordModal,
+                        child: Text(
+                          'esqueceu a senha?',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
                       ),
                     )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 25),
+                  ])),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               SignInButton(text: 'Logar', onTap: signInWrapper),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
                 child: Row(
                   children: [
                     Expanded(
                         child: Divider(
-                      thickness: 0.7,
-                      color: Colors.grey[150],
-                    )),
+                            thickness:
+                                MediaQuery.of(context).size.height * 0.002,
+                            color: Colors.grey[150])),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.05),
                       child: Text(
                         'ou entre com:',
                         style: TextStyle(color: Colors.black),
@@ -293,13 +342,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Expanded(
                         child: Divider(
-                      thickness: 0.7,
+                      thickness: MediaQuery.of(context).size.height * 0.002,
                       color: Colors.grey[150],
                     ))
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.035),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -307,9 +356,20 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: GoogleSignInMethod,
                     imagePath: 'lib/Images/google-logo.png',
                   ),
-                  SizedBox(width: 15),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                   SquareTile(
-                    onTap: (){},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ModalResponse(
+                              STATUS: '0',
+                              MSG: 'FUNÇÃO AINDA NÃO IMPLEMENTADA!',
+                              Type: 'ERROR',
+                              Seconds: 1,
+                            );
+                          });
+                    },
                     imagePath: 'lib/Images/apple-logo.png',
                   )
                 ],

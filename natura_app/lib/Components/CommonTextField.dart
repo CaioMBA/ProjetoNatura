@@ -2,33 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
-class CommonInputTextField extends StatelessWidget {
+class CommonInputTextField extends StatefulWidget {
   final TextEditingController controller;
-  final String hintText;
-  final bool obscureText;
+  final String? hintText;
+  final String? labelText;
+  bool? obscureText;
   final String? Type;
   final String? InputType;
   final void Function(String)? onSubmitted;
   final double? width;
+  final bool? IsPassword;
 
   CommonInputTextField(
       {super.key,
       required this.controller,
-      required this.hintText,
-      required this.obscureText,
+      this.hintText,
+      this.labelText,
+      this.obscureText = false,
       this.Type = 'NEXT',
       this.InputType = 'TEXT',
       this.onSubmitted,
-      this.width = 350});
+      this.width,
+      this.IsPassword = false});
 
+  @override
+  State<CommonInputTextField> createState() => _CommonInputTextFieldState();
+}
+
+class _CommonInputTextFieldState extends State<CommonInputTextField> {
   TextInputType? InputFormatType;
+
+  @override
+  void initState() {
+    widget.obscureText = widget.IsPassword! ? true : false;
+  }
 
   @override
   Widget build(BuildContext context) {
     TextInputFormatter? Formatter =
         FilteringTextInputFormatter.deny(RegExp(r''));
 
-    switch (InputType) {
+    switch (widget.InputType) {
       case 'TEXT':
         InputFormatType = TextInputType.text;
         break;
@@ -54,19 +68,20 @@ class CommonInputTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: SizedBox(
-        width: width ?? 350,
+        width: widget.width ?? MediaQuery.of(context).size.width * 0.92,
         child: TextField(
           autocorrect: true,
           textAlign: TextAlign.center,
-          controller: controller,
-          obscureText: obscureText,
+          controller: widget.controller,
+          obscureText: widget.obscureText!,
           keyboardType: InputFormatType,
           inputFormatters: [Formatter],
-          textInputAction:
-              Type == 'DONE' ? TextInputAction.done : TextInputAction.next,
-          onSubmitted: onSubmitted ?? (value) {},
+          textInputAction: widget.Type == 'DONE'
+              ? TextInputAction.done
+              : TextInputAction.next,
+          onSubmitted: widget.onSubmitted ?? (value) {},
           decoration: InputDecoration(
-            //labelText: hintText,
+            labelText: widget.labelText,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
@@ -75,7 +90,21 @@ class CommonInputTextField extends StatelessWidget {
             ),
             fillColor: Colors.grey.shade200,
             filled: true,
-            hintText: hintText,
+            hintText: widget.hintText,
+            suffixIcon: widget.IsPassword!
+                ? IconButton(
+                    icon: Icon(
+                        widget.obscureText!
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Theme.of(context).primaryColorDark),
+                    onPressed: () {
+                      setState(() {
+                        widget.obscureText = !widget.obscureText!;
+                      });
+                    },
+                  )
+                : null,
             hintStyle: TextStyle(color: Colors.grey.shade400),
           ),
         ),

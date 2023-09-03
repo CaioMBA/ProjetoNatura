@@ -11,10 +11,10 @@ class SignInButton extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-            padding: EdgeInsets.all(25),
-            margin: EdgeInsets.symmetric(horizontal: 25),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.04),
+            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
             decoration: BoxDecoration(
-                color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+                color: Colors.amber, borderRadius: BorderRadius.circular(20)),
             child: Center(
                 child: FittedBox(
                     fit: BoxFit.fitWidth,

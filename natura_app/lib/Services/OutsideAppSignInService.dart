@@ -1,8 +1,8 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:natura_app/Domain/StaticSchematics.dart';
-import 'package:natura_app/Services/GetUserExtraInfoService.dart';
 
 import '../Domain/OutsideAppSignInResponse.dart';
+import 'UserServices.dart';
 
 
 Future<OutsideAppSignInResponse?> SignInWithGoogle() async {

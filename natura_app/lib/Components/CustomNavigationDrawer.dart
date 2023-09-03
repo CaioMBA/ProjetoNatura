@@ -25,9 +25,10 @@ class CustomNavigationDrawer extends StatelessWidget {
   }
 
   Widget buildHeader(BuildContext context) {
-    final backgroundImage = GlobalStatics.UserPhoto!.startsWith('http')
+    ImageProvider<Object>? backgroundImage = GlobalStatics.UserPhoto!.startsWith('http')
         ? NetworkImage(GlobalStatics.UserPhoto!) as ImageProvider<Object>?
         : MemoryImage(Uint8List.fromList(base64.decode(GlobalStatics.UserPhoto!)));
+
 
     return Material(
       color: Colors.amber,

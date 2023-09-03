@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:natura_app/Pages/Login.dart';
-import 'package:natura_app/Services/SignUserService.dart';
 import '../Components/CommonDatePickerField.dart';
 import '../Components/CommonTextField.dart';
 import '../Components/ModalResponse.dart';
@@ -10,6 +9,7 @@ import '../Domain/DefaultApiResponseModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Domain/OutsideAppSignInResponse.dart';
 import '../Services/OutsideAppSignInService.dart';
+import '../Services/UserServices.dart';
 import 'Home.dart';
 import 'RegisterAccountWithOutsideApp.dart';
 
@@ -33,23 +33,37 @@ class _RegisterAccountState extends State<RegisterAccount> {
   @override
   Widget build(BuildContext context) {
     void GoogleSignInMethod() async {
-      OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
-      if (CheckSignIn != null && CheckSignIn.Valid!) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      } else {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => RegisterAccountWithOutsideApp(
-                      UserLogin: CheckSignIn?.Account?.email,
-                      Email: CheckSignIn?.Account?.email,
-                      Name: CheckSignIn?.Account?.displayName,
-                    )));
+      try {
+        OutsideAppSignInResponse? CheckSignIn = await SignInWithGoogle();
+        CheckSignIn?.Valid = CheckSignIn.Valid ?? false;
+        if (CheckSignIn == null) {
+          return;
+        }
+        if (CheckSignIn.Valid!) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RegisterAccountWithOutsideApp(
+                        UserLogin: CheckSignIn?.Account?.email,
+                        Email: CheckSignIn?.Account?.email,
+                        Name: CheckSignIn?.Account?.displayName,
+                        Photo: CheckSignIn?.Account?.photoUrl,
+                      )));
+        }
+      } catch (_) {
+        try {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        } catch (_) {}
       }
     }
 
-    void SignUpButtonFunction(String) async {
+    void SignUpButtonFunction(String s) async {
+      String? Phone;
       showDialog(
           context: context,
           builder: (context) {
@@ -91,22 +105,25 @@ class _RegisterAccountState extends State<RegisterAccount> {
               );
             });
       }
+      if (PhoneController.text != '') {
+        Phone = PhoneController.text;
+        Phone = Phone.replaceAll(' ', '')
+            .replaceAll('-', '')
+            .replaceAll('(', '')
+            .replaceAll(')', '');
+      }
 
       DefaultApiResponseModel? ResponseService = await SignUp(
           FullNameController.text,
           UserNameController.text,
           PasswordController.text,
           EmailController.text,
-          PhoneController.text,
+          Phone,
           BirthdayController.text,
           CpfCnpjController.text,
           '');
+      Phone = null;
       if (ResponseService?.STATUS != null && ResponseService?.STATUS == "1") {
-        if (PhoneController.text != '') {
-          final Uri url = Uri.parse('https://t.me/NotifyApi_bot');
-          if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {}
-        }
-
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
@@ -117,10 +134,10 @@ class _RegisterAccountState extends State<RegisterAccount> {
             context: context,
             builder: (context) {
               return ModalResponse(
-                MSG: ResponseService!.MSG,
+                MSG: ResponseService!.MSG?.replaceAll('||', '|\n|'),
                 STATUS: ResponseService!.STATUS,
                 Type: 'WARNING',
-                Seconds: 3,
+                Seconds: 5,
               );
             });
       }
@@ -143,52 +160,56 @@ class _RegisterAccountState extends State<RegisterAccount> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 15),
-              const SquareTile(
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              SquareTile(
                 imagePath: 'lib/Images/natura-logo.png',
-                Height: 120,
+                Height: MediaQuery.of(context).size.height * 0.18,
               ),
-              const SizedBox(height: 20),
-              Text(
-                'Cadastre-se em nosso App!',
-                style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              FittedBox(
+                child: Text(
+                  'Cadastre-se em nosso App!',
+                  style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CommonInputTextField(
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       controller: FullNameController,
                       hintText: 'Nome Completo *',
                       obscureText: false),
                   CommonInputTextField(
                       controller: UserNameController,
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       hintText: 'Usuário *',
                       obscureText: false)
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CommonInputTextField(
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       controller: PasswordController,
                       hintText: 'Senha *',
+                      IsPassword: true,
                       obscureText: true),
                   CommonInputTextField(
                       controller: ConfirmPasswordController,
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       hintText: 'Confirmar Senha *',
+                      IsPassword: true,
                       obscureText: true)
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -200,7 +221,7 @@ class _RegisterAccountState extends State<RegisterAccount> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -212,17 +233,17 @@ class _RegisterAccountState extends State<RegisterAccount> {
                   )
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CommonDatePickerField(
-                      width: 175,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       controller: BirthdayController,
                       hintText: 'Data Nascimento *'),
                   CommonInputTextField(
                     controller: CpfCnpjController,
-                    width: 175,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     hintText: 'CPF | CNPJ *',
                     obscureText: false,
                     InputType: 'NUMBER',
@@ -231,20 +252,22 @@ class _RegisterAccountState extends State<RegisterAccount> {
                   )
                 ],
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
               SignInButton(text: 'Cadastrar', onTap: signUpWrapper),
-              const SizedBox(height: 25),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.05),
                 child: Row(
                   children: [
                     Expanded(
                         child: Divider(
-                      thickness: 0.7,
+                      thickness: MediaQuery.of(context).size.height * 0.002,
                       color: Colors.grey[150],
                     )),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.02),
                       child: Text(
                         'ou entre com:',
                         style: TextStyle(color: Colors.black),
@@ -252,13 +275,13 @@ class _RegisterAccountState extends State<RegisterAccount> {
                     ),
                     Expanded(
                         child: Divider(
-                      thickness: 0.7,
+                      thickness: MediaQuery.of(context).size.height * 0.002,
                       color: Colors.grey[150],
                     ))
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -266,16 +289,28 @@ class _RegisterAccountState extends State<RegisterAccount> {
                     imagePath: 'lib/Images/google-logo.png',
                     onTap: GoogleSignInMethod,
                   ),
-                  SizedBox(width: 15),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                   SquareTile(
                     imagePath: 'lib/Images/apple-logo.png',
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ModalResponse(
+                              STATUS: '0',
+                              MSG: 'FUNÇÃO AINDA NÃO IMPLEMENTADA!',
+                              Type: 'ERROR',
+                              Seconds: 1,
+                            );
+                          });
+                    },
                   )
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('Já tem cadastro?'),
-                SizedBox(width: 5),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(context,

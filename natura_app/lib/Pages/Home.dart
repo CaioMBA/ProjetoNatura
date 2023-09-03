@@ -17,20 +17,20 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
   }
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
           Title: 'Home'
         ),
-        drawer: CustomNavigationDrawer(),
+        drawer: const CustomNavigationDrawer(),
         body: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                         'lib/Images/background-green_pink_leaves.jpeg'),
                     fit: BoxFit.cover)),
-            child: SafeArea(
+            child: const SafeArea(
                 child: Center(
                     child: SingleChildScrollView(
                         child: Column(
