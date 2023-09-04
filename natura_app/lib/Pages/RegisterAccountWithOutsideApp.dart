@@ -174,12 +174,12 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
                       width: MediaQuery.of(context).size.width * 0.45,
                       controller: PasswordController,
                       hintText: 'Senha *',
-                      obscureText: true),
+                      IsPassword: true),
                   CommonInputTextField(
                       controller: ConfirmPasswordController,
                       width: MediaQuery.of(context).size.width * 0.45,
                       hintText: 'Confirmar Senha *',
-                      obscureText: true)
+                      IsPassword: true)
                 ],
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.015),

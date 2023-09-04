@@ -4,8 +4,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:natura_app/Components/CommonTextField.dart';
 import 'package:natura_app/Components/CustomNavigationDrawer.dart';
+import 'package:natura_app/Services/UserServices.dart';
 import '../Components/CustomAppBar.dart';
 import '../Components/ImagePickerModal.dart';
+import '../Components/ModalResponse.dart';
+import '../Domain/DefaultApiResponseModel.dart';
 import '../Domain/StaticSchematics.dart';
 import '../Services/PickImageService.dart';
 
@@ -30,7 +33,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundImage = GlobalStatics.UserPhoto!.startsWith('http')
+    var backgroundImage = GlobalStatics.UserPhoto!.startsWith('http')
         ? NetworkImage(GlobalStatics.UserPhoto!) as ImageProvider<Object>?
         : MemoryImage(
             Uint8List.fromList(base64.decode(GlobalStatics.UserPhoto!)));
@@ -44,8 +47,52 @@ class _UserPageState extends State<UserPage> {
       );
     }
 
-    void wrapImagePickerShow() {
-      ImagePickerShow(context);
+    void ChangeDetails() async {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const Center(child: CircularProgressIndicator());
+          });
+
+      DefaultApiResponseModel? ResponseService = await ChangeUserDetailsService(
+          GlobalStatics.UserLogin!,
+          LoginController.text,
+          EmailController.text,
+          PhoneController.text);
+      if (ResponseService == null) {
+        Navigator.pop(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ModalResponse(
+                MSG: 'Erro na API, por favor tentar novamente mais tarde',
+                STATUS: '0',
+                Type: 'WARNING',
+                Seconds: 3,
+              );
+            });
+      }
+      if (ResponseService!.STATUS == '1') {
+        await GetExtraInfo(LoginController.text);
+        setState(() {
+          backgroundImage = GlobalStatics.UserPhoto!.startsWith('http')
+              ? NetworkImage(GlobalStatics.UserPhoto!) as ImageProvider<Object>?
+              : MemoryImage(
+              Uint8List.fromList(base64.decode(GlobalStatics.UserPhoto!)));
+          GlobalStatics.UserLogin = LoginController.text;
+        });
+      }
+      Navigator.pop(context);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return ModalResponse(
+              MSG: ResponseService!.MSG,
+              STATUS: ResponseService!.STATUS,
+              Type: ResponseService.STATUS == '1' ? 'SUCCESS' : 'WARNING',
+              Seconds: 3,
+            );
+          });
     }
 
     return Scaffold(
@@ -72,7 +119,9 @@ class _UserPageState extends State<UserPage> {
                                 radius: 72,
                                 backgroundColor: Colors.black,
                                 child: InkWell(
-                                  onTap: wrapImagePickerShow,
+                                  onTap: () {
+                                    ImagePickerShow(context);
+                                  },
                                   child: CircleAvatar(
                                     radius: 70,
                                     backgroundColor: Colors.amber,
@@ -92,7 +141,7 @@ class _UserPageState extends State<UserPage> {
                               FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: Text(
-                                  GlobalStatics.UserEmail!,
+                                  GlobalStatics.UserLogin!,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
@@ -105,27 +154,32 @@ class _UserPageState extends State<UserPage> {
                         controller: LoginController,
                         labelText: 'Login',
                         Type: 'NEXT',
+                        width: MediaQuery.of(context).size.width * 0.8,
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
                       CommonInputTextField(
-                        controller: EmailController,
-                        labelText: 'E-mail',
-                        InputType: 'EMAIL',
-                        Type: 'NEXT',
-                      ),
+                          controller: EmailController,
+                          labelText: 'E-mail',
+                          InputType: 'EMAIL',
+                          Type: 'NEXT',
+                          width: MediaQuery.of(context).size.width * 0.8),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
                       CommonInputTextField(
                         controller: PhoneController,
                         labelText: 'Telefone',
                         InputType: 'PHONE',
+                        onSubmitted: (String x) {
+                          ChangeDetails();
+                        },
+                        width: MediaQuery.of(context).size.width * 0.8,
                         Type: 'DONE',
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
                       FloatingActionButton.extended(
-                        onPressed: () {},
+                        onPressed: ChangeDetails,
                         icon: Icon(Icons.save),
                         label: Text('SALVAR'),
 

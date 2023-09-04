@@ -59,7 +59,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                 FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    GlobalStatics.UserEmail!,
+                    GlobalStatics.UserLogin!,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,

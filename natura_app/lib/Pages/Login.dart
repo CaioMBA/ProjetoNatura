@@ -143,10 +143,6 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
 
-    void signInWrapper() {
-      SignInButtonFunction('');
-    }
-
     void ForgotPasswordCall(String) async {
       Navigator.pop(context);
       showDialog(
@@ -320,7 +316,7 @@ class _LoginPageState extends State<LoginPage> {
                     )
                   ])),
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-              SignInButton(text: 'Logar', onTap: signInWrapper),
+              SignInButton(text: 'Logar', onTap: (){SignInButtonFunction('');}),
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Padding(
                 padding: EdgeInsets.symmetric(
