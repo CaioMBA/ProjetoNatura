@@ -331,7 +331,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.05),
-                      child: Text(
+                      child: const Text(
                         'ou entre com:',
                         style: TextStyle(color: Colors.black),
                       ),

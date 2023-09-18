@@ -89,7 +89,7 @@ class CustomNavigationDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+                  MaterialPageRoute(builder: (context) => HomePage()));
             },
           ),
           const Divider(
@@ -100,7 +100,7 @@ class CustomNavigationDrawer extends StatelessWidget {
             title: const Text('Favoritos'),
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+                  MaterialPageRoute(builder: (context) => HomePage()));
             },
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.3),

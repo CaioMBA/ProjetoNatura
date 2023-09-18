@@ -8,4 +8,5 @@ class ApiUrls {
   static String? ChangeUserDetails = ':7000/AtualizarInformacoesDeUsuario';
   static String? SendNotification = ':7001/EnviarNotificacao';
   static String? GetUserInfo = ':7002/InformacoesUsuario';
+  static String? GetFutureProduct = ':7003/GetFutureProduct';
 }
