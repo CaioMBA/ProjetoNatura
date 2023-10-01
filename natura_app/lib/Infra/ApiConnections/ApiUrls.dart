@@ -9,4 +9,5 @@ class ApiUrls {
   static String? SendNotification = ':7001/EnviarNotificacao';
   static String? GetUserInfo = ':7002/InformacoesUsuario';
   static String? GetFutureProduct = ':7003/GetFutureProduct';
+  static String? GetProductTypesList = ':7003/GetProductTypes';
 }

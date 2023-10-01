@@ -29,6 +29,37 @@ Future<GetFutureProductModel?> GetFutureProductService(String Type) async {
       Name: jsonReponse['name'] ?? 'Produto Sem nome!',
       Type: jsonReponse['type'].toString(),
       Value: double.parse(jsonReponse['value'].toString()),
+      Photo: jsonReponse['photo'] ?? 'https://static.wixstatic.com/media/436cbf_44eaeaeaeb1d4e59b076c11667c57fab~mv2.png/v1/fill/w_1600,h_853,al_c,q_90/file.jpg',
       Date: DateTime.parse(jsonReponse['dateinsert'],));
   return responseModel;
 }
+
+Future<List<GetProductTypes?>> GetTypesList() async{
+  var Response = await apiRequest(ApiRequestModel(
+      auth: AuthApiModel(type: null, authorization: null),
+      headers: [],
+      body: null,
+      url: '${ApiUrls.StartUrl}${ApiUrls.GetProductTypesList}',
+      typeRequest: 'GET'));
+
+  if (Response.statusCode == 200) {
+    List<dynamic> jsonResponse = json.decode(Response.body);
+
+    List<GetProductTypes?> ResponseModel = jsonResponse
+        .map((dynamic json) => GetProductTypes.fromJson(json))
+        .toList();
+
+    return ResponseModel;
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
+
+
+
+
+
+
+
+
+

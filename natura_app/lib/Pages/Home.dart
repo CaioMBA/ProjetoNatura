@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:natura_app/Components/CommonModalShow.dart';
 import 'package:natura_app/Services/ProductServices.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../Components/CommonTextField.dart';
+
+import '../Components/CommonModalDrop.dart';
 import '../Components/CustomAppBar.dart';
 import '../Components/CustomNavigationDrawer.dart';
 import '../Components/ImageContainerBox.dart';
 import '../Domain/ProductModels.dart';
-import 'Login.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -25,20 +23,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  GetContainer(String) async {
+  GetContainer(String x) async {
     GetFutureProductModel? Values =
-        await GetFutureProductService(ChoiceController.text);
+        await GetFutureProductService(x);
     if (Values != null) {
       if (Values.ID != null) {
         Navigator.pop(context);
-        showDialog(context: context, builder: (context){
-          return AlertDialog(
-            content: ImageContainerBox(
-              description: Values.Name!,
-              value: Values.Value.toString(),
-            ),
-          );
-        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: ImageContainerBox(
+                  description: Values.Name!,
+                  value: Values.Value.toString(),
+                  ImageInf: Values.Photo,
+                ),
+              );
+            });
       } else {
         Navigator.pop(context);
         ImageContainerBox(
@@ -49,16 +50,28 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  ShowBox() {
+  ShowBox() async {
+    List<GetProductTypes?> ResponseMap = await GetTypesList();
+    Map<String, String?> productTypeMap = {};
+
+    for (var productType in ResponseMap) {
+      if (productType != null) {
+        productTypeMap[productType.producttypeid.toString()] = productType.type;
+      }
+    }
+
     ChoiceController.clear();
     showDialog(
         context: context,
         builder: (context) {
-          return CommonModalShow(
-            Title: 'Digite o tipo de item que deseja:',
-            controller: ChoiceController,
-            Label: 'Tipo de Produto',
-            onSubmitted: GetContainer,
+          return CommonModalDrop(
+            DpItems: productTypeMap,
+            SelectedValue: '1',
+            onChanged: (String x) {
+              GetContainer(x);
+            },
+            Title: 'Escolha o Tipo de Produto',
+            Label: 'Diga a IA o que procura',
           );
         });
   }

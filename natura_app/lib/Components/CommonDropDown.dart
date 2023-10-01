@@ -1,39 +1,54 @@
 import 'package:flutter/material.dart';
 
 class CommonDropDownMenu extends StatefulWidget {
-  Map<String, String> DpItems = Map<String, String>();
-  String SelectedValue;
+  final Map<String, String?> DpItems;
+  final String SelectedValue;
+  final Function(String) onChanged;
 
-  CommonDropDownMenu(
-      {super.key, required this.DpItems, required this.SelectedValue});
+  CommonDropDownMenu({
+    Key? key,
+    required this.DpItems,
+    required this.SelectedValue,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
-  State<CommonDropDownMenu> createState() => _State();
+  State<CommonDropDownMenu> createState() => _CommonDropDownMenuState();
 }
 
-class _State extends State<CommonDropDownMenu> {
+class _CommonDropDownMenuState extends State<CommonDropDownMenu> {
   List<DropdownMenuItem<String>> Items = [];
 
-  void PopulateDropDown() {
+  @override
+  void initState() {
+    super.initState();
+    _populateDropDown();
+  }
+
+  void _populateDropDown() {
     widget.DpItems.forEach((key, value) {
-      Items.add(
-        DropdownMenuItem(
-          value: key,
-          child: Text(value),
-        ),
-      );
+      if (key != null && value != null){
+        Items.add(
+          DropdownMenuItem(
+            value: key,
+            child: Text(value ?? ''),
+          ),
+        );
+      }
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-        value: widget.SelectedValue,
-        items: Items,
-        onChanged: (newValue) {
-          setState(() {
-            widget.SelectedValue = newValue!;
-          });
+      value: widget.SelectedValue,
+      items: Items,
+      onChanged: (newValue) {
+        setState(() {
+          widget.onChanged(newValue!);
         });
+      },
+    );
   }
 }

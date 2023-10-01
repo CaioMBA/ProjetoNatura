@@ -275,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.015),
               Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.07),
+                      horizontal: MediaQuery.of(context).size.width * 0.05),
                   child: Row(children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
