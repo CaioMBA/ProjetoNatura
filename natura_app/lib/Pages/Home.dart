@@ -24,27 +24,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   GetContainer(String x) async {
-    GetFutureProductModel? Values =
-        await GetFutureProductService(x);
+    GetFutureProductModel? Values = await GetFutureProductService(x);
     if (Values != null) {
       if (Values.ID != null) {
         Navigator.pop(context);
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                content: ImageContainerBox(
+              return  ImageContainerBox(
                   description: Values.Name!,
-                  value: Values.Value.toString(),
+                  value: Values.Value,
                   ImageInf: Values.Photo,
-                ),
-              );
+                );
             });
       } else {
         Navigator.pop(context);
         ImageContainerBox(
           description: "Nenhum Produto Encontrado",
-          value: "R\$ 0.00",
+          value: 0,
         );
       }
     }

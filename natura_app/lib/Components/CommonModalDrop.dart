@@ -22,8 +22,9 @@ class CommonModalDrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      contentPadding: EdgeInsets.zero,
       backgroundColor: Colors.grey[300],
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       title: Text(
         Title,
         style: TextStyle(

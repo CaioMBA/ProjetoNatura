@@ -1,64 +1,87 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import '../Domain/StaticSchematics.dart';
-
 class ImageContainerBox extends StatelessWidget {
   final String description;
-  final String value;
+  final double? value;
+  final int Sale = Random().nextInt(13) + 12;
   String? ImageInf;
 
-  ImageContainerBox({required this.description, required this.value, this.ImageInf = ''});
-
-
+  ImageContainerBox(
+      {required this.description, required this.value, this.ImageInf = ''});
 
   @override
   Widget build(BuildContext context) {
     var backgroundImage = ImageInf!.startsWith('http')
         ? NetworkImage(ImageInf!) as ImageProvider<Object>?
-        : MemoryImage(
-        Uint8List.fromList(base64.decode(ImageInf!)));
+        : MemoryImage(Uint8List.fromList(base64.decode(ImageInf!)));
 
-    return SizedBox(
-      width: 300,
-      height: 350,
-      child: Container(
-        padding: EdgeInsets.all(28.0),
+    return AlertDialog(
+      contentPadding: EdgeInsets.zero,
+      backgroundColor: Colors.grey[300],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
+      content: Container(
+        margin: EdgeInsets.zero,
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.height * 0.465,
+        padding: EdgeInsets.all(25.0),
         decoration: BoxDecoration(
-          color: Colors.grey[200], // Box background color
-          borderRadius: BorderRadius.circular(8.0), // Rounded corners
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(50.0),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              description,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                description.length > 30
+                    ? description.substring(0, 29)
+                    : description,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
               ),
             ),
-            SizedBox(height: 8.0), // Space between description and value
-            Text(
-              'R\$ $value',
-              style: TextStyle(
-                fontSize: 14.0,
+            SizedBox(
+                height: MediaQuery.of(context).size.height *
+                    0.01), // Space between description and value
+            FittedBox(
+              fit: BoxFit.fill,
+              child: CircleAvatar(
+                radius: 100,
+                backgroundColor: Colors.amber,
+                backgroundImage: backgroundImage,
               ),
             ),
-            CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.amber,
-              backgroundImage: backgroundImage,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.020,
             ),
-            SizedBox(height: 25,),
             Text(
-              'DESCONTO DE 50%',
+              '${Sale}% OFF',
               style: TextStyle(
-                fontSize: 20.0,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green),
+            ),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                'Preço: R\$ ${(value! - (value! * Sale / 100)).toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
             ),
+            Text(
+              'R\$ ${value!.toStringAsFixed(2)}',
+              style: TextStyle(
+                  fontSize: 14.0,
+                  fontStyle: FontStyle.italic,
+                  decoration: TextDecoration.lineThrough),
+            )
           ],
         ),
       ),
