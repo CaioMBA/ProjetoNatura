@@ -96,8 +96,8 @@ class CustomNavigationDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            leading: const Icon(Icons.favorite),
-            title: const Text('Favoritos'),
+            leading: const Icon(Icons.shopping_cart_outlined),
+            title: const Text('Minhas Compras'),
             onTap: () {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => HomePage()));

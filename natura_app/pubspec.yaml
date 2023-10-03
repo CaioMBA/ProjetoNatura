@@ -47,6 +47,7 @@ dependencies:
   flutter_multi_formatter: ^2.11.7
   brasil_fields: ^1.9.1
   stroke_text: ^0.0.2
+  google_fonts: ^6.1.0
 
 
 dev_dependencies:

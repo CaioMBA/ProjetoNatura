@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'CommonDropDown.dart';
- // Import the CommonDropDownMenu widget
+// Import the CommonDropDownMenu widget
 
 class CommonModalDrop extends StatelessWidget {
   final String Title;
   final String Label;
-  final String SelectedValue; // Add this property for the dropdown's selected value
-  final Map<String, String?> DpItems; // Add this property for the dropdown items
-  final Function(String) onChanged; // Add this property for the dropdown onChanged callback
+  final String
+      SelectedValue; // Add this property for the dropdown's selected value
+  final Map<String, String?>
+      DpItems; // Add this property for the dropdown items
+  final Function(String)
+      onChanged; // Add this property for the dropdown onChanged callback
 
   CommonModalDrop({
     super.key,
@@ -24,7 +27,7 @@ class CommonModalDrop extends StatelessWidget {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       backgroundColor: Colors.grey[300],
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       title: Text(
         Title,
         style: TextStyle(
@@ -41,7 +44,8 @@ class CommonModalDrop extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          CommonDropDownMenu( // Use the CommonDropDownMenu widget
+          CommonDropDownMenu(
+            // Use the CommonDropDownMenu widget
             DpItems: DpItems,
             SelectedValue: SelectedValue,
             onChanged: onChanged,
@@ -49,7 +53,8 @@ class CommonModalDrop extends StatelessWidget {
           SizedBox(height: 20),
           TextButton(
             onPressed: () {
-              onChanged(SelectedValue); // Call the onChanged callback when the button is pressed
+              onChanged(
+                  SelectedValue); // Call the onChanged callback when the button is pressed
             },
             child: Text(
               'Enviar',

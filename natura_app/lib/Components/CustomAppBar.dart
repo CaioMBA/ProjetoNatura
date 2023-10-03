@@ -6,6 +6,7 @@ import '../Pages/Login.dart';
 
 class CustomAppBar extends AppBar {
   final String Title;
+
   CustomAppBar({super.key, required this.Title});
 
   @override
@@ -50,9 +51,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
     }
 
     return AppBar(
-        //automaticallyImplyLeading: false,
+        //backgroundColor: Colors.transparent,
+        //elevation: 0,
         title: Text(
           widget.Title!,
+          style: TextStyle(fontStyle: FontStyle.italic),
         ),
         actions: [
           IconButton(

@@ -3,6 +3,8 @@ import 'package:natura_app/Pages/Login.dart';
 import 'dart:io';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'Themes/Colors.dart';
+
 void main() {
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Natura Login',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: primaryColor,
       ),
       home: LoginPage(),
     );

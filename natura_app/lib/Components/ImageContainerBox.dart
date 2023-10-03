@@ -3,11 +3,12 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ImageContainerBox extends StatelessWidget {
   final String description;
   final double? value;
-  final int Sale = Random().nextInt(13) + 12;
+  final int Sale = Random().nextInt(15) + 10;
   String? ImageInf;
 
   ImageContainerBox(
@@ -29,7 +30,7 @@ class ImageContainerBox extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.465,
         padding: EdgeInsets.all(25.0),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Colors.grey[300],
           borderRadius: BorderRadius.circular(50.0),
         ),
         child: Column(
@@ -41,9 +42,10 @@ class ImageContainerBox extends StatelessWidget {
                 description.length > 30
                     ? description.substring(0, 29)
                     : description,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+                style: GoogleFonts.dmSerifDisplay(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold
                 ),
               ),
             ),
@@ -71,13 +73,14 @@ class ImageContainerBox extends StatelessWidget {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                'Preço: R\$ ${(value! - (value! * Sale / 100)).toStringAsFixed(2)}',
+                'R\$ ${(value! - (value! * Sale / 100)).toStringAsFixed(2).toString().replaceAll('.', ',')}',
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
             ),
             Text(
-              'R\$ ${value!.toStringAsFixed(2)}',
+              'R\$ ${value!.toStringAsFixed(2).toString().replaceAll('.', ',')}',
               style: TextStyle(
+                color: Colors.grey[500],
                   fontSize: 14.0,
                   fontStyle: FontStyle.italic,
                   decoration: TextDecoration.lineThrough),
