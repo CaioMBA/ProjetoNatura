@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
             onChanged: (String x) {
               GetContainer(x);
             },
-            Title: 'Escolha o Tipo de Produto',
+            Title: 'Escolha o TIPO de produto',
             Label: '',
           );
         });
@@ -126,7 +126,9 @@ class _HomePageState extends State<HomePage> {
                           StrokeText(
                             text: 'Já viu nossa nova IA?',
                             textStyle: GoogleFonts.dmSerifDisplay(
-                                fontSize: 20, color: primaryColor),
+                                fontSize: 20, color: primaryColor ),
+                            strokeColor: Colors.black,
+                            strokeWidth: 2,
                           ),
                           SizedBox(
                               height:
@@ -134,6 +136,9 @@ class _HomePageState extends State<HomePage> {
                           FloatingActionButton.extended(
                             icon: Icon(Icons.card_giftcard),
                             label: Text('Use a IA =>'),
+                            shape: BeveledRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)
+                            ),
                             onPressed: ShowBox,
                           )
                         ],
