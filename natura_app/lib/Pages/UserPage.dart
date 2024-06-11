@@ -10,10 +10,9 @@ import '../Components/ImagePickerModal.dart';
 import '../Components/ModalResponse.dart';
 import '../Domain/DefaultApiResponseModel.dart';
 import '../Domain/StaticSchematics.dart';
-import '../Services/PickImageService.dart';
 
 class UserPage extends StatefulWidget {
-  UserPage({super.key});
+  const UserPage({super.key});
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -24,6 +23,7 @@ class _UserPageState extends State<UserPage> {
   TextEditingController EmailController = TextEditingController();
   TextEditingController PhoneController = TextEditingController();
 
+  @override
   void initState() {
     super.initState();
     LoginController.text = GlobalStatics.UserLogin!;
@@ -87,8 +87,8 @@ class _UserPageState extends State<UserPage> {
           context: context,
           builder: (context) {
             return ModalResponse(
-              MSG: ResponseService!.MSG,
-              STATUS: ResponseService!.STATUS,
+              MSG: ResponseService.MSG,
+              STATUS: ResponseService.STATUS,
               Type: ResponseService.STATUS == '1' ? 'SUCCESS' : 'WARNING',
               Seconds: 3,
             );
@@ -97,7 +97,7 @@ class _UserPageState extends State<UserPage> {
 
     return Scaffold(
         appBar: CustomAppBar(Title: 'Edição de Usuário'),
-        drawer: CustomNavigationDrawer(),
+        drawer: const CustomNavigationDrawer(),
         body: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -129,11 +129,11 @@ class _UserPageState extends State<UserPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: Text(GlobalStatics.UserName!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 28,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)),
@@ -142,7 +142,7 @@ class _UserPageState extends State<UserPage> {
                                 fit: BoxFit.fitWidth,
                                 child: Text(
                                   GlobalStatics.UserLogin!,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                       color: Colors.blue),
@@ -180,8 +180,8 @@ class _UserPageState extends State<UserPage> {
                           height: MediaQuery.of(context).size.height * 0.01),
                       FloatingActionButton.extended(
                         onPressed: ChangeDetails,
-                        icon: Icon(Icons.save),
-                        label: Text('SALVAR'),
+                        icon: const Icon(Icons.save),
+                        label: const Text('SALVAR'),
 
                         /*style:  ElevatedButton.styleFrom(
                           backgroundColor: Theme(data: data, child: child),

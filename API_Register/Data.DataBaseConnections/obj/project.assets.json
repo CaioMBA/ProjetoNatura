@@ -1154,11 +1154,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\caiom\\OneDrive\\Desktop\\Classes\\LIFE_CODES\\API_Register\\Data.DataBaseConnections\\DataBaseConnections.csproj",
+      "projectUniqueName": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Data.DataBaseConnections\\DataBaseConnections.csproj",
       "projectName": "DataBaseConnections",
-      "projectPath": "C:\\Users\\caiom\\OneDrive\\Desktop\\Classes\\LIFE_CODES\\API_Register\\Data.DataBaseConnections\\DataBaseConnections.csproj",
+      "projectPath": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Data.DataBaseConnections\\DataBaseConnections.csproj",
       "packagesPath": "C:\\Users\\caiom\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\caiom\\OneDrive\\Desktop\\Classes\\LIFE_CODES\\API_Register\\Data.DataBaseConnections\\obj\\",
+      "outputPath": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Data.DataBaseConnections\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1180,8 +1180,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\caiom\\OneDrive\\Desktop\\Classes\\LIFE_CODES\\API_Register\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\caiom\\OneDrive\\Desktop\\Classes\\LIFE_CODES\\API_Register\\Domain\\Domain.csproj"
+            "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Domain\\Domain.csproj"
             }
           }
         }
@@ -1190,6 +1190,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -1229,7 +1234,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205\\RuntimeIdentifierGraph.json"
       }
     }
   },

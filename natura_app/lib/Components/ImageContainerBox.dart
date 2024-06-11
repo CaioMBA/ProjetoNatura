@@ -12,7 +12,7 @@ class ImageContainerBox extends StatelessWidget {
   String? ImageInf;
 
   ImageContainerBox(
-      {required this.description, required this.value, this.ImageInf = ''});
+      {super.key, required this.description, required this.value, this.ImageInf = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ImageContainerBox extends StatelessWidget {
         margin: EdgeInsets.zero,
         width: MediaQuery.of(context).size.width * 0.4,
         height: MediaQuery.of(context).size.height * 0.465,
-        padding: EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(25.0),
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(50.0),
@@ -64,8 +64,8 @@ class ImageContainerBox extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.020,
             ),
             Text(
-              '${Sale}% OFF',
-              style: TextStyle(
+              '$Sale% OFF',
+              style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.green),
@@ -74,7 +74,7 @@ class ImageContainerBox extends StatelessWidget {
               fit: BoxFit.fitWidth,
               child: Text(
                 'R\$ ${(value! - (value! * Sale / 100)).toStringAsFixed(2).toString().replaceAll('.', ',')}',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
             ),
             Text(

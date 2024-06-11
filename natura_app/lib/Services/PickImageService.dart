@@ -1,25 +1,24 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 Future<String?> ChooseImageFile(String? type) async {
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
   XFile? image;
 
   if (type == 'GALLERY') {
-    image = await _picker.pickImage(source: ImageSource.gallery);
+    image = await picker.pickImage(source: ImageSource.gallery);
   } else {
-    image = await _picker.pickImage(source: ImageSource.camera);
+    image = await picker.pickImage(source: ImageSource.camera);
   }
 
   if (image == null) return null;
 
   Uint8List imageByte = await image.readAsBytes();
-  String _base64 = base64Encode(imageByte);
+  String base64 = base64Encode(imageByte);
 
-  return _base64;
+  return base64;
 }
 
 Future<bool> CheckNetImage(String imageUrl) async {

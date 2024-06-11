@@ -5,7 +5,7 @@ class CommonDropDownMenu extends StatefulWidget {
   final String SelectedValue;
   final Function(String) onChanged;
 
-  CommonDropDownMenu({
+  const CommonDropDownMenu({
     Key? key,
     required this.DpItems,
     required this.SelectedValue,
@@ -27,7 +27,7 @@ class _CommonDropDownMenuState extends State<CommonDropDownMenu> {
 
   void _populateDropDown() {
     widget.DpItems.forEach((key, value) {
-      if (key != null && value != null){
+      if (value != null){
         Items.add(
           DropdownMenuItem(
             value: key,

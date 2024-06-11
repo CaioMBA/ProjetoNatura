@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:natura_app/Domain/DefaultApiResponseModel.dart';
 import 'package:natura_app/Services/CallApiService.dart';
 import 'package:natura_app/Domain/ApiRequestModel.dart';
-import 'package:http/http.dart' as http;
 import '../Domain/StaticSchematics.dart';
 import '../Domain/UserExtraInfoModel.dart';
 import '../Infra/ApiConnections/ApiUrls.dart';
@@ -39,7 +38,7 @@ Future<DefaultApiResponseModel?> SignUp(
     String Email,
     String? Phone,
     String BirthDay,
-    String CPF_CNPJ,
+    String cpfCnpj,
     String? PhotoLink
     ) async {
   List<CustomHeaderModel> Headers = [];
@@ -48,7 +47,7 @@ Future<DefaultApiResponseModel?> SignUp(
     "p_USERNAME": Name,
     "p_USERLOGIN": Username,
     "p_PASSWORD": Password,
-    "p_CPF_CNPJ": CPF_CNPJ,
+    "p_CPF_CNPJ": cpfCnpj,
     "p_BIRTHDAY": '${DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").format(DateTime.parse(BirthDay))}Z',
     "p_EMAIL": Email,
     "p_PHONE": Phone,

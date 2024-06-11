@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:natura_app/Components/CommonModalShow.dart';
 import 'package:natura_app/Components/CommonTextField.dart';
 import 'package:natura_app/Components/ModalResponse.dart';
 import 'package:natura_app/Domain/StaticSchematics.dart';
@@ -21,7 +18,7 @@ class ImagePickerModal extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Digite o Link da Imagem'),
+            title: const Text('Digite o Link da Imagem'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -64,13 +61,13 @@ class ImagePickerModal extends StatelessWidget {
     }
 
     return AlertDialog(
-      title: Text('Selecionar Imagem'),
+      title: const Text('Selecionar Imagem'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: Icon(Icons.camera),
-            title: Text('Câmera'),
+            leading: const Icon(Icons.camera),
+            title: const Text('Câmera'),
             onTap: () async{
               String? Base64Bytes = await ChooseImageFile('CAMERA');
               try {
@@ -91,8 +88,8 @@ class ImagePickerModal extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.photo),
-            title: Text('Galeria'),
+            leading: const Icon(Icons.photo),
+            title: const Text('Galeria'),
             onTap: () async {
               String? Base64Bytes = await ChooseImageFile('GALLERY');
               try {
@@ -113,8 +110,8 @@ class ImagePickerModal extends StatelessWidget {
             },
           ),
           ListTile(
-              leading: Icon(Icons.wifi),
-              title: Text('Digite o Link'),
+              leading: const Icon(Icons.wifi),
+              title: const Text('Digite o Link'),
               onTap: wrapImagePickerShow)
         ],
       ),

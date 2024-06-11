@@ -13,7 +13,7 @@ class CommonModalDrop extends StatelessWidget {
   final Function(String)
       onChanged; // Add this property for the dropdown onChanged callback
 
-  CommonModalDrop({
+  const CommonModalDrop({
     super.key,
     required this.Title,
     required this.Label,
@@ -30,7 +30,7 @@ class CommonModalDrop extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       title: Text(
         Title,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
         ),
       ),
@@ -39,9 +39,9 @@ class CommonModalDrop extends StatelessWidget {
         children: <Widget>[
           Text(
             Label,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           CommonDropDownMenu(
@@ -50,13 +50,13 @@ class CommonModalDrop extends StatelessWidget {
             SelectedValue: SelectedValue,
             onChanged: onChanged,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextButton(
             onPressed: () {
               onChanged(
                   SelectedValue); // Call the onChanged callback when the button is pressed
             },
-            child: Text(
+            child: const Text(
               'Enviar',
               style: TextStyle(
                 color: Colors.blue,

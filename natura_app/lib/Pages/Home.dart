@@ -12,7 +12,7 @@ import '../Components/ItemTile.dart';
 import '../Domain/ProductModels.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -95,6 +95,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[300],
@@ -116,8 +117,8 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                       color: Colors.green[200],
                       borderRadius: BorderRadius.circular(20)),
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-                  padding: EdgeInsets.all(25),
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                  padding: const EdgeInsets.all(25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -134,8 +135,8 @@ class _HomePageState extends State<HomePage> {
                               height:
                                   MediaQuery.of(context).size.height * 0.01),
                           FloatingActionButton.extended(
-                            icon: Icon(Icons.card_giftcard),
-                            label: Text('Use a IA =>'),
+                            icon: const Icon(Icons.card_giftcard),
+                            label: const Text('Use a IA =>'),
                             shape: BeveledRectangleBorder(
                               borderRadius: BorderRadius.circular(15)
                             ),
@@ -154,9 +155,9 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: TextField(
                     decoration: InputDecoration(
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
+                            borderSide: const BorderSide(color: Colors.green),
                             borderRadius: BorderRadius.circular(40)),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: primaryColor),

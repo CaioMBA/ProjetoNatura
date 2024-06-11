@@ -8,7 +8,7 @@ class CommonModalShow extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String)? onSubmitted;
 
-  CommonModalShow(
+  const CommonModalShow(
       {super.key,
       this.onSubmitted,
       required this.Title,
@@ -26,7 +26,7 @@ class CommonModalShow extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
       title: Text(
         Title,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black
         ),
       ),
@@ -35,9 +35,9 @@ class CommonModalShow extends StatelessWidget {
         children: <Widget>[
           Text(
             Label,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           CommonInputTextField(
@@ -46,10 +46,10 @@ class CommonModalShow extends StatelessWidget {
               Type: 'DONE',
               obscureText: false,
               onSubmitted: onSubmitted),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextButton(
             onPressed: onSubmittedWrapper,
-            child: Text(
+            child: const Text(
               'Enviar',
               style: TextStyle(
                   color: Colors.blue,

@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:natura_app/Pages/Home.dart';
 import 'package:natura_app/Pages/UserPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Domain/StaticSchematics.dart';
 
 class CustomNavigationDrawer extends StatelessWidget {
@@ -13,6 +12,7 @@ class CustomNavigationDrawer extends StatelessWidget {
 
   final ThemeIcon = CupertinoIcons.moon_stars;
 
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       child: SingleChildScrollView(
@@ -35,7 +35,7 @@ class CustomNavigationDrawer extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => UserPage()));
+              context, MaterialPageRoute(builder: (context) => const UserPage()));
         },
         child: Container(
             padding: EdgeInsets.only(
@@ -47,11 +47,11 @@ class CustomNavigationDrawer extends StatelessWidget {
                   backgroundColor: Colors.amber,
                   backgroundImage: backgroundImage,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(GlobalStatics.UserName!,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 28,
                           color: Colors.black,
                           fontWeight: FontWeight.bold)),
@@ -60,7 +60,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     GlobalStatics.UserLogin!,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
                         color: Colors.blue),
@@ -89,7 +89,7 @@ class CustomNavigationDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => HomePage()));
+                  MaterialPageRoute(builder: (context) => const HomePage()));
             },
           ),
           const Divider(
@@ -100,7 +100,7 @@ class CustomNavigationDrawer extends StatelessWidget {
             title: const Text('Minhas Compras'),
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => HomePage()));
+                  MaterialPageRoute(builder: (context) => const HomePage()));
             },
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.3),

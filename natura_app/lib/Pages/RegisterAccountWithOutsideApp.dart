@@ -6,7 +6,6 @@ import '../Components/ModalResponse.dart';
 import '../Components/SignInButton.dart';
 import '../Components/SquareTile.dart';
 import '../Domain/DefaultApiResponseModel.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../Services/UserServices.dart';
 import 'Home.dart';
 
@@ -16,7 +15,7 @@ class RegisterAccountWithOutsideApp extends StatefulWidget {
   final String? Name;
   final String? Photo;
 
-  RegisterAccountWithOutsideApp(
+  const RegisterAccountWithOutsideApp(
       {super.key, this.Email, this.UserLogin, this.Name, this.Photo});
 
   @override
@@ -102,7 +101,7 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
           widget.Photo.toString());
       if (ResponseService?.STATUS != null && ResponseService?.STATUS == "1") {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
       } else {
         PasswordController.clear();
         ConfirmPasswordController.clear();
@@ -112,7 +111,7 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
             builder: (context) {
               return ModalResponse(
                 MSG: ResponseService!.MSG,
-                STATUS: ResponseService!.STATUS,
+                STATUS: ResponseService.STATUS,
                 Type: 'WARNING',
                 Seconds: 3,
               );
@@ -236,14 +235,14 @@ class _RegisterAccountState extends State<RegisterAccountWithOutsideApp> {
                     thickness: MediaQuery.of(context).size.height * 0.002,
                   )),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('Já tem cadastro?'),
+                const Text('Já tem cadastro?'),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.02),
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                          MaterialPageRoute(builder: (context) => const LoginPage()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Logar agora!',
                       style: TextStyle(
                           color: Colors.blueAccent,

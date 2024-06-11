@@ -82,7 +82,7 @@ class _CommonInputTextFieldState extends State<CommonInputTextField> {
           onSubmitted: widget.onSubmitted ?? (value) {},
           decoration: InputDecoration(
             labelText: widget.labelText,
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
             focusedBorder: const OutlineInputBorder(

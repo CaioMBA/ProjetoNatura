@@ -59,10 +59,10 @@ class _DatePickerTextFieldState extends State<CommonDatePickerField> {
           onTap: () => _selectDate(context),
           controller: widget.controller,
           decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.orange),
             ),
             fillColor: Colors.grey.shade200,

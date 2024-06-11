@@ -12,8 +12,8 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 25),
-      padding: EdgeInsets.all(25),
+      margin: const EdgeInsets.only(left: 25),
+      padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
         color: Colors.deepOrange[50],
         borderRadius: BorderRadius.circular(40),

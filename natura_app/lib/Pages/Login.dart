@@ -16,7 +16,7 @@ import 'RegisterAccount.dart';
 import 'RegisterAccountWithOutsideApp.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           return;
         } else {
           Navigator.pushReplacement(
-              context, new MaterialPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => const HomePage()));
           return;
         }
       }
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
         PasswordController.clear();
         await GetExtraInfo(GlobalStatics.UserName);
         Navigator.pushReplacement(
-            context, new MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         return;
       }
     }
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
         await GetExtraInfo(UserNameController.text);
 
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
       } else {
         PasswordController.clear();
         UserNameController.clear();
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
             builder: (context) {
               return ModalResponse(
                 MSG: ResponseService!.MSG,
-                STATUS: ResponseService!.STATUS,
+                STATUS: ResponseService.STATUS,
                 Type: 'WARNING',
                 Seconds: 3,
               );
@@ -169,20 +169,18 @@ class _LoginPageState extends State<LoginPage> {
 
       ForgotPasswordController.clear();
 
-      if (ResponseService != null) {
-        Navigator.pop(context);
-        showDialog(
-            context: context,
-            builder: (context) {
-              return ModalResponse(
-                MSG: ResponseService!.MSG,
-                STATUS: ResponseService!.STATUS,
-                Type: ResponseService.STATUS == '1' ? 'SUCCESS' : 'WARNING',
-                Seconds: 3,
-              );
-            });
-      }
-    }
+      Navigator.pop(context);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return ModalResponse(
+              MSG: ResponseService.MSG,
+              STATUS: ResponseService.STATUS,
+              Type: ResponseService.STATUS == '1' ? 'SUCCESS' : 'WARNING',
+              Seconds: 3,
+            );
+          });
+        }
 
     void ForgotPasswordModal() {
       showDialog(
@@ -210,20 +208,20 @@ class _LoginPageState extends State<LoginPage> {
             loginData.setBool('Login', false);
             loginData.setBool('OutsideAppSigned', true);
 
-            loginData.setString('UserName', CheckSignIn!.Account!.email);
+            loginData.setString('UserName', CheckSignIn.Account!.email);
             loginData.setString('Password', '');
           }
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => const HomePage()));
         } else {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => RegisterAccountWithOutsideApp(
-                      UserLogin: CheckSignIn?.Account?.email,
-                      Email: CheckSignIn?.Account?.email,
-                      Name: CheckSignIn?.Account?.displayName,
-                      Photo: CheckSignIn?.Account?.photoUrl)));
+                      UserLogin: CheckSignIn.Account?.email,
+                      Email: CheckSignIn.Account?.email,
+                      Name: CheckSignIn.Account?.displayName,
+                      Photo: CheckSignIn.Account?.photoUrl)));
         }
       } catch (_) {
         try {
@@ -370,18 +368,18 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('Não tem cadastro ainda?'),
-                SizedBox(width: 5),
+                const Text('Não tem cadastro ainda?'),
+                const SizedBox(width: 5),
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterAccount()));
+                              builder: (context) => const RegisterAccount()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Cadastre-se agora!',
                       style: TextStyle(
                           color: Colors.blueAccent,

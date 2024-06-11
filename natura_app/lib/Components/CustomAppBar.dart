@@ -31,6 +31,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     void SignOut() {
       loginData.setBool('Login', true);
@@ -47,20 +48,20 @@ class _CustomAppBarState extends State<CustomAppBar> {
       GlobalStatics.UserID = 0;
 
       Navigator.pushReplacement(
-          context, new MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
 
     return AppBar(
         //backgroundColor: Colors.transparent,
         //elevation: 0,
         title: Text(
-          widget.Title!,
-          style: TextStyle(fontStyle: FontStyle.italic),
+          widget.Title,
+          style: const TextStyle(fontStyle: FontStyle.italic),
         ),
         actions: [
           IconButton(
             onPressed: SignOut,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
         leading: null);

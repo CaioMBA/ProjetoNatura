@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EC4E029F-01FC-4650-8787-4C0A5DE23E13}|Service\\Service.csproj|c:\\users\\caiom\\onedrive\\documents\\development\\projetonatura\\api_register\\service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EC4E029F-01FC-4650-8787-4C0A5DE23E13}|Service\\Service.csproj|solutionrelative:service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89567A54-D1EE-4B9D-AE16-AEFD7ECC269C}|Domain\\Domain.csproj|c:\\users\\caiom\\onedrive\\documents\\development\\projetonatura\\api_register\\domain\\models\\createuserrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89567A54-D1EE-4B9D-AE16-AEFD7ECC269C}|Domain\\Domain.csproj|solutionrelative:domain\\models\\createuserrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B1731AB-E6EB-4A12-9409-DC1B88DF27C9}|App\\App.csproj|c:\\users\\caiom\\onedrive\\documents\\development\\projetonatura\\api_register\\app\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B1731AB-E6EB-4A12-9409-DC1B88DF27C9}|App\\App.csproj|solutionrelative:app\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A92B2013-F77A-4EAA-827D-3D3D3A403ED8}|CrossCutting\\CrossCutting.csproj|c:\\users\\caiom\\onedrive\\documents\\development\\projetonatura\\api_register\\crosscutting\\allconfigurations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A92B2013-F77A-4EAA-827D-3D3D3A403ED8}|CrossCutting\\CrossCutting.csproj|solutionrelative:crosscutting\\allconfigurations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B1731AB-E6EB-4A12-9409-DC1B88DF27C9}|App\\App.csproj|c:\\users\\caiom\\onedrive\\documents\\development\\projetonatura\\api_register\\app\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8B1731AB-E6EB-4A12-9409-DC1B88DF27C9}|App\\App.csproj|solutionrelative:app\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Service\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Service\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Service\\Services\\UserService.cs",
+              "RelativeToolTip": "Service\\Services\\UserService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE4BAABhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T21:13:29.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CreateUserRequestModel.cs",
+              "DocumentMoniker": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Domain\\Models\\CreateUserRequestModel.cs",
+              "RelativeDocumentMoniker": "Domain\\Models\\CreateUserRequestModel.cs",
+              "ToolTip": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\Domain\\Models\\CreateUserRequestModel.cs",
+              "RelativeToolTip": "Domain\\Models\\CreateUserRequestModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T21:17:23.159Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\App\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "App\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\App\\Controllers\\UserController.cs",
+              "RelativeToolTip": "App\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABcAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T20:11:01.291Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AllConfigurations.cs",
+              "DocumentMoniker": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\CrossCutting\\AllConfigurations.cs",
+              "RelativeDocumentMoniker": "CrossCutting\\AllConfigurations.cs",
+              "ToolTip": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\CrossCutting\\AllConfigurations.cs",
+              "RelativeToolTip": "CrossCutting\\AllConfigurations.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAABYAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-26T20:10:07.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\App\\appsettings.json",
+              "RelativeDocumentMoniker": "App\\appsettings.json",
+              "ToolTip": "C:\\Users\\caiom\\OneDrive\\Documents\\Development\\ProjetoNatura\\API_Register\\App\\appsettings.json",
+              "RelativeToolTip": "App\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-26T20:10:07.074Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

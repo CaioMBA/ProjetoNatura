@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CrossCutting
-build_property.ProjectDir = C:\Users\caiom\OneDrive\Desktop\Classes\LIFE_CODES\API_Register\CrossCutting\
+build_property.ProjectDir = C:\Users\caiom\OneDrive\Documents\Development\ProjetoNatura\API_Register\CrossCutting\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

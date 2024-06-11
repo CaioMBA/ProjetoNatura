@@ -20,7 +20,7 @@ class SignInButton extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                     child: Text(
                       text ?? 'Próximo',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 25),
